@@ -1,13 +1,16 @@
 import React from 'react';
 import './App.css';
-import HomePage from './home-page-component/homepage.component';
+import HomePage from './pages/homepage';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter } from 'react-router-dom';
 
 function App() {
   return (
-    <div>
-      <HomePage />
-    </div>
+  	<BrowserRouter>
+	    <div>
+	      <HomePage />
+	    </div>
+    </BrowserRouter>
   );
 }
 

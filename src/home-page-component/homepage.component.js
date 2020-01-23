@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import './homepage.component.scss';
 import MenuItem from './menu-items-component/menu-item.component'
 
-class HomePage extends Component{
+class HomePageComponent extends Component{
 
-	constructor(){
+	constructor( props){
 
 		super()
-
+		console.log(props);
 		this.state={
 			sections : [
 					  {
@@ -53,27 +53,27 @@ class HomePage extends Component{
 	render(){
 
 		return(
-
-			<div className='homepage'>
+			
 				<div className="container">
 				  <div className="row new">
 				   	{this.state.sections.map(({ title, imageUrl, id, linkUrl, column_size})=>{
 				   		return(
-
+				   			<div className={`col-md-${column_size} col-lg-${column_size}`}>
 					   		<MenuItem key={id} 
 					   				  title={title} 
 					   				  imageUrl={imageUrl} 
-					   				  column_size={column_size} 
-					   				  linkUrl={linkUrl} />
+					   				  linkUrl={linkUrl}
+					   				  history={this.props.history}
+					   				  match={this.props.match} />
+					   		</div>
 				   				)
 				   	})}
 
 				  </div>
 				</div>
-			</div>
 
 			)
 	}
 }
 
-export default HomePage;
+export default HomePageComponent;
