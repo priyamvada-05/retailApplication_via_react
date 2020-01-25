@@ -58,7 +58,7 @@ class HomePageComponent extends Component{
 				  <div className="row new">
 				   	{this.state.sections.map(({ title, imageUrl, id, linkUrl, column_size})=>{
 				   		return(
-				   			<div className={`col-md-${column_size} col-lg-${column_size}`}>
+				   			<div key={id} className={`col-md-${column_size} col-lg-${column_size}`}>
 					   		<MenuItem key={id} 
 					   				  title={title} 
 					   				  imageUrl={imageUrl} 

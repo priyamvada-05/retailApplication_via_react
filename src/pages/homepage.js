@@ -1,22 +1,21 @@
 import React from 'react';
 import HomePageComponent from '../home-page-component/homepage.component';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import ShopPageComponent from '../shop-page-component/shopPagecomponent';
 import Header from '../header-component/header.component';
 import SigninSignupComponent from '../sign-in-sign-up-component/sign-in-sign-up.component'
 import './homepage.scss';
 import { auth} from '../firebase-config/firebaseConfig';
 import { createUserProfileDocument} from '../firebase-config/firebaseConfig';
+import { connect} from 'react-redux';
+import { setCurrentUser} from '../redux/user/userAction';
+import CheckoutComponent from '../checkout-component/checkoutComponent';
 
 
 class HomePage extends React.Component{
 
-	constructor(){
-		super()
-		this.state={
-			currentUser:''
-		}
-
+	constructor(props){
+		super(props)
 		this.unsubscribeFromAuth=null;
 	}
 
@@ -28,7 +27,7 @@ class HomePage extends React.Component{
 			userRef.onSnapshot( (snapshot)=>{
 				console.log(snapshot.data());
 				
-				this.setState({
+				this.props.setCurrentUserToRedux({
 					currentUser:{
 						id:snapshot.id,
 						...snapshot.data()
@@ -37,7 +36,7 @@ class HomePage extends React.Component{
 			})
 		}
 		else{
-			this.setState({ currentUser: null})
+			this.props.setCurrentUserToRedux({ currentUser: null})
 		}
 		})
 
@@ -50,12 +49,22 @@ class HomePage extends React.Component{
 	render(){
 		return(
 			<div>
-					<Header currentUser={this.state.currentUser}/>
+					<Header />
 					<div className='new'>
 					<Switch >
 						<Route exact={true} path='/' component={HomePageComponent}></Route>
 						<Route exact={true} path='/shops' component={ShopPageComponent}></Route>
-						<Route exact={true} path='/sign-in' component={SigninSignupComponent}></Route>
+						<Route 
+							exact={true} 
+							path='/sign-in' 
+							render={ ()=>{
+								return(
+								this.props.currentUser?
+									<Redirect to='/' /> :
+									<SigninSignupComponent />)
+							}}
+						></Route>
+						<Route exact={true} path='/checkout' component={CheckoutComponent}></Route>
 					</Switch>
 					</div>
 
@@ -66,4 +75,16 @@ class HomePage extends React.Component{
 
 }
 
-export default HomePage;
+const mapDispatchToProps=(dispatch)=>{
+	return({
+		setCurrentUserToRedux: (user)=>dispatch(setCurrentUser(user))
+	})
+}
+
+const mapStateToProps= (rootRedux)=>{
+	return({
+		currentUser:rootRedux.user.currentUser
+	})
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

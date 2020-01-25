@@ -22,8 +22,13 @@
     cursor: pointer;
 
     .option {
-      padding: 10px 15px;
+      padding: 10px 10px;
       text-decoration: none;
+    }
+
+    .new{
+      display: flex;
+      flex-flow: row;
     }
   }
 

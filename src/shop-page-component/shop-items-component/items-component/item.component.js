@@ -1,8 +1,18 @@
 import React from 'react';
 import './item.component.scss';
+import CustomButton from '../../../sign-in-sign-up-component/custom-button-component/customButton.component';
+import { connect} from 'react-redux';
+import { addItemToCart} from '../../../redux/cart/cartAction';
 
-const Item = ({name, imageUrl, price})=>{
-	console.log(imageUrl);
+const Item = ({item, addItemToRedux})=>{
+	
+	const {name, imageUrl, price}=item;
+
+	const handleClick=()=>{
+		console.log('hi');
+		addItemToRedux(item);
+	}
+
 	return(
 		<div className='collection-item'>
 			<div className='image' style={{
@@ -13,8 +23,15 @@ const Item = ({name, imageUrl, price})=>{
 				<span className='name'>{name} </span>
 				<span className='price'> ${price} </span>
 			</div>
+			<CustomButton onClick={handleClick} isInverted={true}> Add to cart</CustomButton>
 		</div>
 		)
 }
 
-export default Item
+const mapDispatchToProps=(dispatch)=>{
+	return({
+		addItemToRedux: (item)=> dispatch(addItemToCart(item))
+	})
+}
+
+export default connect(null,mapDispatchToProps)(Item)
