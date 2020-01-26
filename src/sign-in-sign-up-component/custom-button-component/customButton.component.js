@@ -21,7 +21,7 @@ const CustomButton=({children, isGoogle, loading, isInverted, ...otherprops})=>{
 	}
 	return(
 		<button className={classStyle} {...otherprops}>
-			{ loading?
+			{ ?
 				<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
 				  
 				 :
