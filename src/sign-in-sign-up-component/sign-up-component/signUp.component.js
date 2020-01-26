@@ -134,7 +134,7 @@ class SignUp extends React.Component{
 						<div><span className='error'> {this.state.error.confirmPassword}</span><br /> <br /></div>
 						: null
 					}
-					<CustomButton type='submit' name='submit'> Sign up </CustomButton>
+					<CustomButton loading={this.state.loading} type='submit' name='submit'> Sign up </CustomButton>
 										{
 						(this.state.register_error)?
 						<div><span className='error'>Register error</span><br /> <br /></div>
