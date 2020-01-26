@@ -18,7 +18,7 @@ const CheckOutItemComponent = ({item, addItemToCartByRedux, removeItemFromCartBy
 				<span className='value'> {quantity}</span>
 				<div className='arrow' onClick={()=> addItemToCartByRedux(item)}> &#10095; </div>
 			</span>
-			<span className='price'> ${price}</span>
+			<span className='price'> &euro; {price}</span>
 			<div className='remove-button' onClick={()=> removeItemFromCartByRedux(item)}> &#10005; </div>
 		</div>
 		)

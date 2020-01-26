@@ -4,6 +4,7 @@ import { connect} from 'react-redux';
 import { totalPriceInCart} from '../redux/cart/cartSelector';
 import { cartItemSelector} from '../redux/cart/cartSelector';
 import CheckOutItemComponent from './checkout-item-component/checkoutItemComponent';
+import StripeComponent from '../stripe-component/stripeComponent';
 
 const CheckoutComponent=(props)=>{
 
@@ -31,8 +32,14 @@ const CheckoutComponent=(props)=>{
 					)}
 
 			<div className='total'>
-				<span> TOTAL : $ {props.totalPriceInCartFromRedux}</span>
+				<span> TOTAL : &euro; {props.totalPriceInCartFromRedux}</span>
 			</div>
+
+			<div>
+				Please insert some RANDOM CARD details for testing
+				<br /> 
+			</div>
+			<StripeComponent price={props.totalPriceInCartFromRedux}/>
 		</div>
 		)
 }

@@ -1,15 +1,14 @@
 import React from 'react';
 import './item.component.scss';
-import CustomButton from '../../../sign-in-sign-up-component/custom-button-component/customButton.component';
+import CustomButton from '../../../../sign-in-sign-up-component/custom-button-component/customButton.component';
 import { connect} from 'react-redux';
-import { addItemToCart} from '../../../redux/cart/cartAction';
+import { addItemToCart} from '../../../../redux/cart/cartAction';
 
 const Item = ({item, addItemToRedux})=>{
 	
 	const {name, imageUrl, price}=item;
 
 	const handleClick=()=>{
-		console.log('hi');
 		addItemToRedux(item);
 	}
 
@@ -21,7 +20,7 @@ const Item = ({item, addItemToRedux})=>{
 			</div>
 			<div className='collection-footer'>
 				<span className='name'>{name} </span>
-				<span className='price'> ${price} </span>
+				<span className='price'> &euro;{price} </span>
 			</div>
 			<CustomButton onClick={handleClick} isInverted={true}> Add to cart</CustomButton>
 		</div>

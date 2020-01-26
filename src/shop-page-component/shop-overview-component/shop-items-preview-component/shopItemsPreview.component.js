@@ -1,8 +1,8 @@
 import React from 'react';
 import Item from './items-component/item.component';
-import './shopItems.component.scss'
+import './shopItemsPreview.component.scss'
 
-const ShopItemsComponent=({title, items})=>{
+const ShopItemsPreviewComponent=({title, items})=>{
 
 	return(
 		<div className='collection-preview'>
@@ -23,4 +23,4 @@ const ShopItemsComponent=({title, items})=>{
 		)
 }
 
-export default ShopItemsComponent;
+export default ShopItemsPreviewComponent;

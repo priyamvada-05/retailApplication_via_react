@@ -8,8 +8,6 @@ import { withRouter} from 'react-router-dom';
 import { toggleCartDropDown} from '../redux/cart/cartAction';
 
 const CartDropDownComponent= (props)=>{
-	console.log('this is cartdropdowm component');
-	console.log(props);
 
 	const handleClick=()=>{
 		 props.history.push('/checkout');

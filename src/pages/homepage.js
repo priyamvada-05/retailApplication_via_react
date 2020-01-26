@@ -10,6 +10,7 @@ import { createUserProfileDocument} from '../firebase-config/firebaseConfig';
 import { connect} from 'react-redux';
 import { setCurrentUser} from '../redux/user/userAction';
 import CheckoutComponent from '../checkout-component/checkoutComponent';
+import AuthProtection from '../auth-protection-component/authProtection';
 
 
 class HomePage extends React.Component{
@@ -53,7 +54,7 @@ class HomePage extends React.Component{
 					<div className='new'>
 					<Switch >
 						<Route exact={true} path='/' component={HomePageComponent}></Route>
-						<Route exact={true} path='/shops' component={ShopPageComponent}></Route>
+						<AuthProtection path='/shops' component={ShopPageComponent}></AuthProtection>
 						<Route 
 							exact={true} 
 							path='/sign-in' 
@@ -64,7 +65,7 @@ class HomePage extends React.Component{
 									<SigninSignupComponent />)
 							}}
 						></Route>
-						<Route exact={true} path='/checkout' component={CheckoutComponent}></Route>
+						<AuthProtection exact={true} path='/checkout' component={CheckoutComponent}></AuthProtection>
 					</Switch>
 					</div>
 

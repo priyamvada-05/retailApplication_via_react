@@ -10,8 +10,7 @@ import CartDropDownComponent from '../cart-dropdown-component/cartDropDownCOmpon
 
 const Header= (props)=>{
 
-	console.log('this is header');
-	console.log(props)
+
 	return(
 		<div className='header'>
 			<Link className='Logo-container' to='/'>

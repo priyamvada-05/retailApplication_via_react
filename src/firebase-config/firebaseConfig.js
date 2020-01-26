@@ -22,6 +22,13 @@ const config = {
  	if(userInfo){
  	const userRef= await firebase_db.doc(`user/${userInfo.uid}`);
  	const userSnapshot= await userRef.get();
+    console.log('firebase userRed')
+    console.log(userRef)
+    console.log('firebase userSnapshot')
+    console.log(userSnapshot)
+    console.log('firebase additionalInfo')
+    console.log(additionalInfo)
+
 
  	if(!userSnapshot.exist){
 
@@ -29,10 +36,10 @@ const config = {
 
  		try{
  			await userRef.set({
-	 			name: userInfo.displayName,
+	 			name: additionalInfo,
 	 			email:userInfo.email,
 	 			createdAt: date,
-        ...additionalInfo
+        //...additionalInfo
  		})
  		}
  		catch(err){

@@ -11,7 +11,9 @@ class SignIn extends React.Component{
 		super()
 		this.state={
 			email:'',
-			password:''
+			password:'',
+			loading:false,
+			error:null
 		}
 	}
 
@@ -22,13 +24,18 @@ class SignIn extends React.Component{
 
 	submitChange=async(event)=>{
 		const { email, password}= this.state;
+		this.setState({loading: true})
 		event.preventDefault();
+		try{
 		await auth.signInWithEmailAndPassword(email, password);
-		
-		this.setState({
-			email:'',
-			password:''
-		});
+		}
+		catch(error){
+			console.log(error)
+			this.setState({error: error,
+						   loading:false,
+						   email:'',
+						   password:''})
+		}
 	}
 
 	render(){
@@ -41,10 +48,15 @@ class SignIn extends React.Component{
 			<FormInput type='email' lable='email' value={this.state.email}  name='email' onChange={this.handleChange}  />
 			<FormInput type='password' lable='password' value={this.state.password}  name='password' onChange={this.handleChange}  />
 			<div className='buttons'>
-			<CustomButton type='submit' name='submit'> Sign in </CustomButton>
+			<CustomButton loading={this.state.loading} type='submit' name='submit'> Sign in </CustomButton>
 			<CustomButton type='submit' name='submit' isGoogle={true} onClick={ signInWithGoogle}> Sign in with Google </CustomButton>
 			</div>
 		</form>
+		{
+		(this.state.error)?
+		<span className='error'> Email and Password is incorrect</span>
+		: null
+		}
 		</div>
 
 		)

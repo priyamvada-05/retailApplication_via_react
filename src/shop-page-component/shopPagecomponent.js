@@ -1,29 +1,28 @@
 import React from 'react';
-import ShopData from './shop-data';
-import ShopItems from './shop-items-component/shopItems.component'
+import ShopOverviewComponent from './shop-overview-component/shopOverviewComponent';
+import { Route} from 'react-router-dom';
+import ShopItemComponent from './shop-item-component/shopItem.component';
 
 class ShopPageComponent extends React.Component{
 
-	constructor(){
-		super()
-		this.state={
-			shopData:ShopData
-		}
-
+	constructor(props){
+		super(props)
 	}
 
 	render(){
 
 		return(
 			<div className='category'>
-				{this.state.shopData.map(({id, ...remainingShopData})=>{
-					return(
-					<ShopItems key={id} {...remainingShopData}  />
-					)})}
+
+				<Route exact={true} path={`${this.props.match.path}`} component={ShopOverviewComponent} />
+				<Route path={`${this.props.match.path}/:category`} component={ShopItemComponent} />
+
 			</div>
 
 			)
 	}
 }
+
+
 
 export default ShopPageComponent;
