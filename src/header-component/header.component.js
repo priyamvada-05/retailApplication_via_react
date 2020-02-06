@@ -6,10 +6,15 @@ import { auth} from '../firebase-config/firebaseConfig';
 import { connect} from 'react-redux';
 import CartComponent from '../cart-component/cartComponent';
 import CartDropDownComponent from '../cart-dropdown-component/cartDropDownCOmponent';
+import { signOutUser} from '../redux/user/userAction';
 
 
 const Header= (props)=>{
 
+const handleSignOut=()=>{
+	auth.signOut();
+	props.signOutByRedux();
+}
 
 	return(
 		<div className='header'>
@@ -23,12 +28,10 @@ const Header= (props)=>{
 				props.currentUser ? 
 				(
 					<div className='new option'>
-					<div className='option' onClick={()=> auth.signOut()}>
+					<div className='option' onClick={handleSignOut}>
 						SIGN OUT
 					</div>
-					<CartComponent onClick={()=>{ 
-						console.log('hi');
-						props.toggleCartDropDownToRedux()}}/>
+					<CartComponent />
 					</div>
 				) : 
 				<Link className='option' to='/sign-in'> SIGN IN </Link>
@@ -54,6 +57,12 @@ const mapStateToProps=(rootReducer)=>{
 	})
 }
 
+const mapDispatchToProps=(dispatch)=>{
+	return({
+		signOutByRedux: ()=>dispatch(signOutUser())
+	})
+}
 
 
-export default connect(mapStateToProps)(Header);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

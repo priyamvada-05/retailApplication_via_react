@@ -4,16 +4,17 @@ import CustomButton from '../custom-button-component/customButton.component';
 import './signIn.component.scss';
 import { signInWithGoogle} from '../../firebase-config/firebaseConfig';
 import { auth} from '../../firebase-config/firebaseConfig';
+import { connect} from 'react-redux';
+import { startSigninWithGoogle, startSigninWithEmailAndPassword} from '../../redux/user/userAction';
 
 class SignIn extends React.Component{
 
-	constructor(){
-		super()
+	constructor(props){
+		super(props)
 		this.state={
 			email:'',
 			password:'',
-			loading:false,
-			error:null
+			loading:false
 		}
 	}
 
@@ -26,15 +27,15 @@ class SignIn extends React.Component{
 		const { email, password}= this.state;
 		this.setState({loading: true})
 		event.preventDefault();
-		try{
-		await auth.signInWithEmailAndPassword(email, password);
-		}
-		catch(error){
-			console.log(error)
-			this.setState({error: error,
-						   loading:false,
-						   email:'',
-						   password:''})
+
+		this.props.signInWithEmailAndPassword({ email, password});
+
+		if(this.props.error){
+		setTimeout(()=>{
+					(this.setState({
+						loading:false
+					}))
+				},1000)
 		}
 	}
 
@@ -49,12 +50,12 @@ class SignIn extends React.Component{
 			<FormInput type='password' lable='password' value={this.state.password}  name='password' onChange={this.handleChange}  />
 			<div className='buttons'>
 			<CustomButton loading={this.state.loading} type='submit' name='submit'> Sign in </CustomButton>
-			<CustomButton type='submit' name='submit' isGoogle={true} onClick={ signInWithGoogle}> Sign in with Google </CustomButton>
+			<CustomButton type='button' name='submit' isGoogle={true} onClick={ this.props.signInWithGoogle}> Sign in with Google </CustomButton>
 			</div>
 		</form>
 		{
-		(this.state.error)?
-		<span className='error'> Email and Password is incorrect</span>
+		(this.props.error)?
+		<span className='error'> {this.props.error}</span>
 		: null
 		}
 		</div>
@@ -63,4 +64,18 @@ class SignIn extends React.Component{
 }
 }
 
-export default SignIn;
+const mapDispatchToProps=(dispatch)=>{
+	return({
+		signInWithGoogle: ()=> dispatch(startSigninWithGoogle()),
+		signInWithEmailAndPassword: ({ email, password})=> dispatch(startSigninWithEmailAndPassword({ email, password}))
+	})
+	
+}
+
+const mapStateToProps=(rootReducer)=>{
+	return({
+		error: rootReducer.user.error
+	})
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

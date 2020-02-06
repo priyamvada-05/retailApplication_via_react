@@ -6,45 +6,28 @@ import Header from '../header-component/header.component';
 import SigninSignupComponent from '../sign-in-sign-up-component/sign-in-sign-up.component'
 import './homepage.scss';
 import { auth} from '../firebase-config/firebaseConfig';
-import { createUserProfileDocument} from '../firebase-config/firebaseConfig';
+import { createUserProfileDocument, createCollectionAndDocument} from '../firebase-config/firebaseConfig';
 import { connect} from 'react-redux';
 import { setCurrentUser} from '../redux/user/userAction';
 import CheckoutComponent from '../checkout-component/checkoutComponent';
 import AuthProtection from '../auth-protection-component/authProtection';
+import firebase from '../firebase-config/firebaseConfig';
 
 
 class HomePage extends React.Component{
 
 	constructor(props){
-		super(props)
-		this.unsubscribeFromAuth=null;
+		super(props);
 	}
 
 
 	componentDidMount(){
-		this.unsubscribeFromAuth= auth.onAuthStateChanged(async (user)=>{
-			if(user){
-			const userRef=await createUserProfileDocument(user);
-			userRef.onSnapshot( (snapshot)=>{
-				console.log(snapshot.data());
-				
-				this.props.setCurrentUserToRedux({
-					currentUser:{
-						id:snapshot.id,
-						...snapshot.data()
-					}
-				})
-			})
-		}
-		else{
-			this.props.setCurrentUserToRedux({ currentUser: null})
-		}
-		})
+
 
 	}
 
 	componentWillUnmount(){
-		//this.unsubscribeFromAuth();
+		
 	}
 
 	render(){
@@ -53,8 +36,17 @@ class HomePage extends React.Component{
 					<Header />
 					<div className='new'>
 					<Switch >
-						<Route exact={true} path='/' component={HomePageComponent}></Route>
-						<AuthProtection path='/shops' component={ShopPageComponent}></AuthProtection>
+						<Route 
+							exact={true} 
+							path='/' 
+							component={HomePageComponent}>
+						</Route>
+
+						<AuthProtection 
+							path='/shops' 
+							component={ShopPageComponent}>
+						</AuthProtection>
+
 						<Route 
 							exact={true} 
 							path='/sign-in' 
@@ -65,7 +57,12 @@ class HomePage extends React.Component{
 									<SigninSignupComponent />)
 							}}
 						></Route>
-						<AuthProtection exact={true} path='/checkout' component={CheckoutComponent}></AuthProtection>
+
+						<AuthProtection 
+							exact={true} 
+							path='/checkout' 
+							component={CheckoutComponent}>
+						</AuthProtection>
 					</Switch>
 					</div>
 
@@ -84,7 +81,8 @@ const mapDispatchToProps=(dispatch)=>{
 
 const mapStateToProps= (rootRedux)=>{
 	return({
-		currentUser:rootRedux.user.currentUser
+		currentUser:rootRedux.user.currentUser,
+		shopDataFromRedux: rootRedux.shop.shopData
 	})
 }
 

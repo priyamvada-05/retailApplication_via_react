@@ -9,5 +9,14 @@ export const shopStateData= createSelector(
 
 export const getShopDataByCategory= (category)=> createSelector(
 	[shopStateData],
-	(shopData)=> shopData[category]
+	(shopData)=> {
+
+		return (shopData[category])
+		
+	}
+	)
+
+export const getShopDataLoadingStatus= createSelector(
+	[shopState],
+	(shop)=> shop.loading
 	)

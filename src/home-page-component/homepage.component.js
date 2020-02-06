@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './homepage.component.scss';
 import MenuItem from './menu-items-component/menu-item.component'
 import { Link} from 'react-router-dom';
+import { auth} from '../firebase-config/firebaseConfig';
 
 class HomePageComponent extends Component{
 
@@ -52,11 +53,18 @@ class HomePageComponent extends Component{
 		}
 	}
 
+		componentDidMount(){
+		console.log('this is home page 5');
+		var user = auth.currentUser;
+		console.log(auth)
+
+	}
+
 	render(){
 
 		return(
 			
-				<div className="container">
+
 				  <div className="row new">
 				   	{this.state.sections.map(({ title, imageUrl, id, linkUrl, column_size})=>{
 				   		return(
@@ -75,7 +83,7 @@ class HomePageComponent extends Component{
 				   	})}
 
 				  </div>
-				</div>
+
 
 			)
 	}

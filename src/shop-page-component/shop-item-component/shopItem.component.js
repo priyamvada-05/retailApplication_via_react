@@ -5,7 +5,9 @@ import { getShopDataByCategory} from '../../redux/shop/shopSelector';
 import ItemComponent from '../shop-overview-component/shop-items-preview-component/items-component/item.component';
 
 const ShopItemComponent= ({ shopDataFromRedux, match})=>{
-	
+	console.log('shop item')
+	console.log(shopDataFromRedux)
+
 	const { title, items}= shopDataFromRedux;
 
 	return(
@@ -21,9 +23,10 @@ const ShopItemComponent= ({ shopDataFromRedux, match})=>{
 		)
 
 }
-const mapStateToProps= (rootReducer, propsFromRedux)=>{
+const mapStateToProps= (rootReducer, propsFromComponent)=>{
+
 	return({
-		shopDataFromRedux: getShopDataByCategory(propsFromRedux.match.params.category)(rootReducer)
+		shopDataFromRedux: getShopDataByCategory(propsFromComponent.match.params.category)(rootReducer)
 	})
 }
 

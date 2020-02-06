@@ -7,7 +7,7 @@ const ShopItemsPreviewComponent=({title, items})=>{
 	return(
 		<div className='collection-preview'>
 			<h1 className='title'>{title}</h1>
-				<div className="container">
+
 				  <div className="row">
 			{items.filter((item, index)=> index < 4 ).map((item)=>{
 				return(
@@ -16,7 +16,6 @@ const ShopItemsPreviewComponent=({title, items})=>{
 					</div>
 					)
 			})}
-		</div>
 		</div>
 		</div>
 
