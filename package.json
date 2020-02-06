@@ -30,8 +30,8 @@
     "npm": "6.9.0"
   },
   "scripts": {
-    "start_dev": "serve -s build",
-    "start": "react-scripts start",
+    "start": "serve -s build",
+    "start_dev": "react-scripts start",
     "heroku-postbuild": "npm run build",
     "build": "react-scripts build",
     "test": "react-scripts test",
